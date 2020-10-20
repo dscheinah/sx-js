@@ -1,0 +1,6 @@
+{
+    "name": "dscheinah/sx-js",
+    "description": "Core JavaScript framework used in sx applications.",
+    "type": "library",
+    "license": "GPL-3.0-or-later"
+}
