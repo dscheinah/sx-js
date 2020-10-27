@@ -5,7 +5,10 @@
     "jest": "^26.5.2"
   },
   "jest": {
-    "moduleDirectories": ["node_modules", "../src"]
+    "rootDir": "..",
+    "moduleDirectories": ["test/node_modules", "src"],
+    "collectCoverageFrom": ["src/**/*.js"],
+    "coverageDirectory": "test/coverage"
   },
   "scripts": {
     "test": "jest",

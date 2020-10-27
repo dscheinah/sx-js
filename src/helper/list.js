@@ -14,11 +14,14 @@ export default function list(selector, data, callback) {
     if (!list) {
         return;
     }
+    if (!data) {
+        data = [];
+    }
     // Build an array to enable array access on the children.
     const children = Array.from(list.children);
     // Remember the initial list length to trigger deletion if needed.
     const length = children.length;
-    (data || []).forEach((item, index) => {
+    data.forEach((item, index) => {
         const element = callback(item);
         const child = children[index];
         if (child) {
