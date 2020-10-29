@@ -99,6 +99,9 @@ export default class State {
      * @returns {*}
      */
     get(name) {
+        if (this.state[name] === undefined) {
+            return null;
+        }
         // Use clones of the data to not allow implicit state changes.
         return JSON.parse(JSON.stringify(this.state[name]));
     }

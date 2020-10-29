@@ -1,12 +1,14 @@
 {
   "devDependencies": {
-    "@babel/preset-env": "^7.11.5",
-    "babel-jest": "^26.5.2",
-    "jest": "^26.5.2"
+    "@babel/preset-env": "^7.12.1",
+    "babel-jest": "^26.6.1",
+    "flush-promises": "^1.0.2",
+    "jest": "^26.6.1",
+    "jsdom": "^16.4.0"
   },
   "jest": {
     "rootDir": "..",
-    "moduleDirectories": ["test/node_modules", "src"],
+    "moduleDirectories": ["node_modules", "src"],
     "collectCoverageFrom": ["src/**/*.js"],
     "coverageDirectory": "test/coverage"
   },

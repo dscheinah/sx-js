@@ -6,7 +6,7 @@ import create from './helper/create.js';
  *
  * @param {string} src
  *
- * @returns {Promise<DocumentFragment>}
+ * @returns {Promise<DocumentFragment|null>}
  */
 async function load(src) {
     let template;
@@ -17,7 +17,7 @@ async function load(src) {
     // This is a hack to handle relative URLs for scripts. The imports are resolved relative to the current URL but
     // defined relative to the pages src. So the absolute pages directory is used instead of "./".
     let url = (new URL(src.replace(/[^\/]+$/, ''), window.location.href)).toString();
-    nodes.innerHTML = html.replace('src="./', `src="${url}`);
+    nodes.innerHTML = html.replace(/src="(..?)\//, `src="${url}$1/`);
 
     let children = nodes.children;
     for (let i = 0; i < children.length; i++) {
@@ -26,20 +26,23 @@ async function load(src) {
         if (child instanceof HTMLTemplateElement) {
             template = child;
         } else if (child instanceof HTMLScriptElement) {
-            if (child.src) {
-                // To be able to rewrite relative URLs of imports the src must be fetched as inline code.
-                child.text = await (await fetch(child.src)).text();
-            }
             // Create a new script. The browser will not run the code if the original script is used.
             let local = create('script');
-            local.type = child.type;
+            ['type', 'src'].forEach((key) => {
+                if (child[key]) {
+                    local[key] = child[key];
+                }
+            });
             // Prepend the pages directory to relative imports with absolute for the same reasons as above.
-            local.text = child.text.replace(/(['"])..\//, `$1${url}../`);
+            local.text = child.text.replace(/(from ['"])(..?)\//, `$1${url}$2/`);
             document.body.appendChild(local);
         } else if (child instanceof HTMLStyleElement) {
             // Style needs to be put to the head by definition.
             document.head.appendChild(child);
         }
+    }
+    if (!template) {
+        return null;
     }
     // The content defined in the pages template will be rendered in DOM.
     return document.importNode(template.content, true);
@@ -52,7 +55,7 @@ async function load(src) {
  * @param {string} fun
  */
 function call(scope, fun) {
-    const callback = (scope || {})[fun];
+    const callback = scope[fun];
     if (callback) {
         callback();
     }
@@ -126,7 +129,9 @@ export default class Page {
             page.element = create('div');
             // Lazy load the pages content.
             load(page.src).then((element) => {
-                page.element.appendChild(element);
+                if (element) {
+                    page.element.appendChild(element);
+                }
             });
         }
         // There is no need to wait for lazy loading to setup the page.
