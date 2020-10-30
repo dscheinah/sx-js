@@ -89,7 +89,7 @@ export default class Page {
      * element. Pages not explicitly hidden are always visible and must be managed by CSS.
      *
      * @param {State}       state
-     * @param {HTMLElement} container
+     * @param {Element} container
      */
     constructor(state, container) {
         this.state = state;

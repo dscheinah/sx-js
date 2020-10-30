@@ -3,7 +3,7 @@
  *
  * @param {string} tag
  *
- * @returns {HTMLElement}
+ * @returns {Element}
  */
 export default function create(tag) {
     return document.createElement(tag);
