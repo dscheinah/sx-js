@@ -34,7 +34,7 @@ async function load(src) {
                 }
             });
             // Prepend the pages directory to relative imports with absolute for the same reasons as above.
-            local.text = child.text.replace(/(from ['"])(..?)\//, `$1${url}$2/`);
+            local.text = child.text.replace(/(from ?['"])(..?)\//, `$1${url}$2/`);
             document.body.appendChild(local);
         } else if (child instanceof HTMLStyleElement) {
             // Style needs to be put to the head by definition.
