@@ -6,9 +6,11 @@ test('listen', () => {
     action.listen('div', 'focus', () => called++);
     action.listen('div', 'click', () => called++);
     action.listen('div', 'click', () => called++);
-    action.listen('span', 'click', (e) => {
+    action.listen('span', 'click', (e, target) => {
         e.preventDefault();
-        called++;
+        if (target) {
+            called++;
+        }
     });
     const div = document.createElement('div');
     const span = document.createElement('span');

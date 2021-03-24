@@ -39,7 +39,7 @@ export default class Action {
                     selectors.forEach((selector) => {
                         if (target.matches(selector)) {
                             // Run all registered callbacks if the selector is matched.
-                            this.listeners[type][selector].forEach(callback => callback(event));
+                            this.listeners[type][selector].forEach(callback => callback(event, target));
                         }
                     });
                     target = target.parentNode;
