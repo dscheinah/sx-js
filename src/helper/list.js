@@ -22,7 +22,7 @@ export default function list(selector, data, callback) {
     // Remember the initial list length to trigger deletion if needed.
     const length = children.length;
     data.forEach((item, index) => {
-        const element = callback(item);
+        const element = callback(item, index);
         const child = children[index];
         if (child) {
             // If the child already exists it will only be replaced (and re-rendered) if it changed.

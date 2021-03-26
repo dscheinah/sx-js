@@ -23,9 +23,10 @@ jest.mock('helper/element.js', () => {
     });
 });
 
-const callback = (value) => {
+const callback = (value, index) => {
     let div = document.createElement('div');
     div.innerHTML = value;
+    div.dataset.index = index;
     return div;
 };
 
@@ -42,8 +43,11 @@ test('list', () => {
     list('valid', [1, 2, 3], callback);
     expect(valid.children).toHaveLength(3);
     expect(valid.children[0].innerHTML).toEqual("1");
+    expect(valid.children[0].dataset.index).toEqual("0");
     expect(valid.children[1].innerHTML).toEqual("2");
+    expect(valid.children[1].dataset.index).toEqual("1");
     expect(valid.children[2].innerHTML).toEqual("3");
+    expect(valid.children[2].dataset.index).toEqual("2");
     list('valid', null, callback);
     expect(valid.children).toHaveLength(0);
     list('invalid', [], callback);
