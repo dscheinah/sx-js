@@ -37,10 +37,10 @@ export default class State {
         }
         let handlers = this.handlers[name] || [];
         // Callback to transform data with handlers. The step is used to create the middleware chain.
-        let dispatch = (payload, step) => {
+        let dispatch = (payload, data, step) => {
             let handler = handlers[step];
             if (handler) {
-                return handler(payload, payload => dispatch(payload, step + 1));
+                return handler(payload, (payload, data) => dispatch(payload, data, step + 1));
             }
         };
         // Callback to trigger listeners after the handlers are ready.
@@ -52,7 +52,7 @@ export default class State {
             // This implicitly triggers the listeners.
             this.set(name, result);
         };
-        let result = dispatch(payload, 0);
+        let result = dispatch(payload, null, 0);
         // Handlers may be async but don't need to be.
         if (result instanceof Promise) {
             result.then(result => handle(result));
