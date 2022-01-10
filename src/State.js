@@ -52,7 +52,7 @@ export default class State {
             // This implicitly triggers the listeners.
             this.set(name, result);
         };
-        let result = dispatch(payload, null, 0);
+        let result = dispatch(payload, this.get(name), 0);
         // Handlers may be async but don't need to be.
         if (result instanceof Promise) {
             result.then(result => handle(result));

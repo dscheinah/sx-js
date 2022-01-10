@@ -18,6 +18,12 @@ test('dispatch', async () => {
 
     state.dispatch('test4', undefined);
     expect(state.get('test4')).toBeNull();
+
+    state.handle('test5', async (x) => x);
+    state.handle('test5', async (x, y) => y);
+    state.dispatch('test5', 'test');
+    await flushPromises();
+    expect(state.get('test5')).toEqual('test');
 });
 
 test('listen', () => {
