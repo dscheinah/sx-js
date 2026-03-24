@@ -4,7 +4,7 @@
     "babel-jest": "^30.3.0",
     "flush-promises": "^1.0.2",
     "jest": "^30.3.0",
-    "jsdom": "^16.7.0"
+    "jsdom": "^29.0.1"
   },
   "jest": {
     "rootDir": "..",
