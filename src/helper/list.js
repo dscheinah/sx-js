@@ -26,7 +26,7 @@ export default function list(selector, data, callback) {
         const child = children[index];
         if (child) {
             // If the child already exists it will only be replaced (and re-rendered) if it changed.
-            if (element.innerHTML !== child.innerHTML) {
+            if (element.outerHTML !== child.outerHTML) {
                 list.replaceChild(element, child);
             }
         } else {
