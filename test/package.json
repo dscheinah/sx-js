@@ -4,13 +4,28 @@
     "babel-jest": "^30.3.0",
     "flush-promises": "^1.0.2",
     "jest": "^30.3.0",
+    "jest-environment-jsdom": "^30.3.0",
     "jsdom": "^29.0.1"
   },
   "jest": {
     "rootDir": "..",
-    "moduleDirectories": ["node_modules", "src"],
-    "collectCoverageFrom": ["src/**/*.js"],
-    "coverageDirectory": "test/coverage"
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "coverageDirectory": "test/coverage",
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.js$": [
+        "babel-jest",
+        {
+          "configFile": "./babel.config.js"
+        }
+      ]
+    }
   },
   "scripts": {
     "test": "jest",
